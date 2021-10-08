@@ -22,23 +22,13 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      *     path="/api/login",
      *     operationId="/api/login",
      *     tags={"Credentials"},
-     *     @OA\Parameter(
-     *         name="email",
-     *         in="query",
-     *         description="The email parameter",
+     *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="password",
-     *         in="query",
-     *         description="Some password user match with email",
-     *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\JsonContent(ref="#/components/schemas/LoginRequest")
      *     ),
      *     @OA\Response(
      *         response="200",
-     *         description="Returns some sample category things",
+     *         description="Returns valid credential",
      *     ),
      *     @OA\Response(
      *         response="400",
@@ -55,30 +45,13 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      *     path="/api/register",
      *     operationId="/api/register",
      *     tags={"Credentials"},
-     *     @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="The Name parameter",
+     *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="email",
-     *         in="query",
-     *         description="The email parameter",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="password",
-     *         in="query",
-     *         description="Some password parameter",
-     *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\JsonContent(ref="#/components/schemas/RegisterRequest")
      *     ),
      *     @OA\Response(
-     *         response="200",
-     *         description="Returns some sample category things",
+     *         response="201",
+     *         description="Success register user",
      *         @OA\JsonContent()
      *     ),
      *     @OA\Response(
@@ -162,7 +135,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      *  @OA\Get(
      *     path="/api/item",
      *     operationId="get_list",
-     *     tags={"CRUD ITEM"},
+     *     tags={"CRUD Via MongoDB"},
      *     @OA\Response(
      *         response="200",
      *         description="Returns message list item"
@@ -181,20 +154,10 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      * @OA\Post(
      *     path="/api/item",
      *     operationId="store",
-     *     tags={"CRUD ITEM"},
-     *     @OA\Parameter(
-     *         name="title",
-     *         in="query",
-     *         description="The title item",
+     *     tags={"CRUD Via MongoDB"},
+     *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="price",
-     *         in="query",
-     *         description="Some price item",
-     *         required=true,
-     *         @OA\Schema(type="number")
+     *         @OA\JsonContent(ref="#/components/schemas/StoreProjectRequest")
      *     ),
      *     @OA\Response(
      *         response="201",
@@ -214,7 +177,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      *  @OA\Get(
      *     path="/api/item/{id}",
      *     operationId="get_detail",
-     *     tags={"CRUD ITEM"},
+     *     tags={"CRUD Via MongoDB"},
      *     @OA\Parameter(
      *      name="id",
      *      in="path",
@@ -242,27 +205,17 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      * @OA\Put(
      *     path="/api/item/{id}",
      *     operationId="update",
-     *     tags={"CRUD ITEM"},
+     *     tags={"CRUD Via MongoDB"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/StoreProjectRequest")
+     *     ),
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="Id items",
      *         required=true,
      *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="title",
-     *         in="query",
-     *         description="The title item",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="price",
-     *         in="query",
-     *         description="Some price item",
-     *         required=true,
-     *         @OA\Schema(type="number")
      *     ),
      *     @OA\Response(
      *         response="201",
@@ -282,7 +235,134 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
      * @OA\Delete(
      *     path="/api/item/{id}",
      *     operationId="delete",
-     *     tags={"CRUD ITEM"},
+     *     tags={"CRUD Via MongoDB"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id items",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="Returns message success delete item",
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Error: Bad request. When required parameters were not supplied.",
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Error: Server error.",
+     *     ),
+     *     security={{ "Authorization": {} }}
+     * )
+     * 
+     * 
+     * @OA\Get(
+     *     path="/api/firebase",
+     *     operationId="index-firebase",
+     *     tags={"CRUD Via Firebase"},
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returns message list item"
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Error: Bad request. When required parameters were not supplied.",
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Error: Unauthorized. when token is not valid.",
+     *     ),
+     *     security={{ "Authorization": {} }}
+     *  )
+     * 
+     * @OA\Post(
+     *     path="/api/firebase",
+     *     operationId="store-firebase",
+     *     tags={"CRUD Via Firebase"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/StoreProjectRequest")
+     *     ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="Returns Success create item on firebase",
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Error: Bad request. When required parameters were not supplied.",
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Error: Server error.",
+     *     ),
+     *     security={{ "Authorization": {} }}
+     * )
+     * 
+     * @OA\Get(
+     *     path="/api/firebase/{id}",
+     *     operationId="detail-firebase",
+     *     tags={"CRUD Via Firebase"},
+     *     @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      description="A id",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returns message list item"
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Error: Bad request. When required parameters were not supplied.",
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Error: Unauthorized. when token is not valid.",
+     *     ),
+     *     security={{ "Authorization": {} }}
+     *  )
+     * 
+     * @OA\Put(
+     *     path="/api/firebase/{id}",
+     *     operationId="update",
+     *     tags={"CRUD Via Firebase"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/StoreProjectRequest")
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id items",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="Returns message success update item",
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Error: Bad request. When required parameters were not supplied.",
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Error: Server error.",
+     *     ),
+     *     security={{ "Authorization": {} }}
+     * )
+     * 
+     * @OA\Delete(
+     *     path="/api/firebase/{id}",
+     *     operationId="delete",
+     *     tags={"CRUD Via Firebase"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

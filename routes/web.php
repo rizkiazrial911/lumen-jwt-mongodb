@@ -38,6 +38,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
   $router->get('/bill_demon', ['uses' => 'ExtraController@index']);
   $router->get('/send_mail', ['uses' => 'EmailController@send_email']);
+
+  $router->get('firebase', ['uses' => 'FirebaseController@index']);
+  $router->post('firebase', ['uses' => 'FirebaseController@store']);
+  $router->get('firebase/{_id}', ['uses' => 'FirebaseController@show']);
+  $router->put('firebase/{_id}', ['uses' => 'FirebaseController@update']);
+  $router->delete('firebase/{_id}', ['uses' => 'FirebaseController@destroy']);
 });
 
 $router->get('/debug-sentry', function(){

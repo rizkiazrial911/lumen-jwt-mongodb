@@ -15,29 +15,19 @@
                     "Credentials"
                 ],
                 "operationId": "/api/login",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "The email parameter",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Some password user match with email",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Returns some sample category things"
+                        "description": "Returns valid credential"
                     },
                     "400": {
                         "description": "Error: Bad request. When required parameters were not supplied."
@@ -54,38 +44,19 @@
                     "Credentials"
                 ],
                 "operationId": "/api/register",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "The Name parameter",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "The email parameter",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Some password parameter",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "200": {
-                        "description": "Returns some sample category things",
+                    "201": {
+                        "description": "Success register user",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -176,7 +147,7 @@
         "/api/item": {
             "get": {
                 "tags": [
-                    "CRUD ITEM"
+                    "CRUD Via MongoDB"
                 ],
                 "operationId": "get_list",
                 "responses": {
@@ -198,29 +169,19 @@
             },
             "post": {
                 "tags": [
-                    "CRUD ITEM"
+                    "CRUD Via MongoDB"
                 ],
                 "operationId": "store",
-                "parameters": [
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "The title item",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "price",
-                        "in": "query",
-                        "description": "Some price item",
-                        "required": true,
-                        "schema": {
-                            "type": "number"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreProjectRequest"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Returns message success create item"
@@ -242,7 +203,7 @@
         "/api/item/{id}": {
             "get": {
                 "tags": [
-                    "CRUD ITEM"
+                    "CRUD Via MongoDB"
                 ],
                 "operationId": "get_detail",
                 "parameters": [
@@ -275,7 +236,7 @@
             },
             "put": {
                 "tags": [
-                    "CRUD ITEM"
+                    "CRUD Via MongoDB"
                 ],
                 "operationId": "update",
                 "parameters": [
@@ -287,26 +248,18 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "The title item",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "price",
-                        "in": "query",
-                        "description": "Some price item",
-                        "required": true,
-                        "schema": {
-                            "type": "number"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreProjectRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Returns message success update item"
@@ -326,7 +279,174 @@
             },
             "delete": {
                 "tags": [
-                    "CRUD ITEM"
+                    "CRUD Via MongoDB"
+                ],
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id items",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns message success delete item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/firebase": {
+            "get": {
+                "tags": [
+                    "CRUD Via Firebase"
+                ],
+                "operationId": "index-firebase",
+                "responses": {
+                    "200": {
+                        "description": "Returns message list item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "CRUD Via Firebase"
+                ],
+                "operationId": "store-firebase",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreProjectRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Returns Success create item on firebase"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/firebase/{id}": {
+            "get": {
+                "tags": [
+                    "CRUD Via Firebase"
+                ],
+                "operationId": "detail-firebase",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "A id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns message list item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "CRUD Via Firebase"
+                ],
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id items",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreProjectRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Returns message success update item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "CRUD Via Firebase"
                 ],
                 "operationId": "delete",
                 "parameters": [
@@ -360,6 +480,84 @@
         }
     },
     "components": {
+        "schemas": {
+            "LoginRequest": {
+                "title": "Store Item request",
+                "description": "Store Item request body data",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "Email user",
+                        "type": "string",
+                        "example": "user@mail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password User",
+                        "type": "string",
+                        "example": "secret"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "title": "Store Item request",
+                "description": "Store Item request body data",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name User",
+                        "type": "string",
+                        "example": "John Adams"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email user",
+                        "type": "string",
+                        "example": "user@mail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password User",
+                        "type": "string",
+                        "example": "secret"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreProjectRequest": {
+                "title": "Store Project request",
+                "description": "Store Project request body data",
+                "required": [
+                    "title",
+                    "price"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Title item",
+                        "type": "string",
+                        "example": "Indomie Goreng"
+                    },
+                    "price": {
+                        "title": "price",
+                        "description": "Price of item",
+                        "type": "string",
+                        "example": "1000"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "Authorization": {
                 "type": "http",

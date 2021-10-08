@@ -46,8 +46,8 @@ class ItemController extends Controller
                 'price' => 'required|numeric'
             ]);
             $detail_item = Item::findOrFail($_id);
-            $detail_item->title = $request->title;
-            $detail_item->price = $request->price;
+            $detail_item->title = $request->post('title');
+            $detail_item->price = $request->post('price');
             $detail_item->save();
             if($detail_item){
                 return response()->json(array("message"=> "Success Update Item"), 200);

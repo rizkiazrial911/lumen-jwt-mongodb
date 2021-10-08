@@ -25,17 +25,23 @@ class AuthController extends Controller
                 "email" => $request->post('email'),
                 "password" => Hash::make($request->post('password')),
             );
-            // dd($data);
-            $register = User::create($data);
-            if($register){
-                return response()->json([
-                    "message" => "Success register user",
-                    "data" => $register,
-                ], 201);
+            $exist_user = User::where('email', $request->post('email'))->first();
+            if(!$exist_user){
+                $register = User::create($data);
+                if($register){
+                    return response()->json([
+                        "message" => "Success register user",
+                        "data" => $register,
+                    ], 201);
+                }else{
+                    return response()->json([
+                        "message" => "Failed register user"
+                    ], 400);
+                }
             }else{
                 return response()->json([
-                    "message" => "Failed register user"
-                ], 400);
+                        "message" => "Email already use, please use other email"
+                    ], 400);
             }
         }catch(\Exception $e){
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
