@@ -94,7 +94,6 @@ class Handler extends ExceptionHandler
         if (app()->bound('sentry') && $this->shouldReport($exception)) {
             app('sentry')->captureException($exception);
         }
-        dd($exception);
         return response()->json(['error' => $response], $response['status'] ?? 500);
     }
     

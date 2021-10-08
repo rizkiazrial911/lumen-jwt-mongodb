@@ -37,6 +37,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
   $router->delete('item/{_id}', ['uses' => 'ItemController@destroy']);
 
   $router->get('/bill_demon', ['uses' => 'ExtraController@index']);
+  $router->get('/send_mail', ['uses' => 'EmailController@send_email']);
 });
 
 $router->get('/debug-sentry', function(){

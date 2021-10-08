@@ -9,6 +9,8 @@
         "darkaonline/swagger-lume": "8.*",
         "dusterio/lumen-passport": "^0.3.4",
         "flipbox/lumen-generator": "^8.2",
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/mail": "^8.63",
         "jenssegers/mongodb": "^3.8",
         "laravel/lumen-framework": "^8.0",
         "sentry/sentry-laravel": "^2.9",

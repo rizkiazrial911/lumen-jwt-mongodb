@@ -70,7 +70,7 @@ class AuthController extends Controller
                 ], 403);
             }
         }catch(\Exception $e){
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage(), ]);
         }
     }
 
