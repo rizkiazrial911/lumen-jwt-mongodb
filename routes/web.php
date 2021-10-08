@@ -35,6 +35,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
   $router->get('item/{_id}', ['uses' => 'ItemController@show']);
   $router->put('item/{_id}', ['uses' => 'ItemController@update']);
   $router->delete('item/{_id}', ['uses' => 'ItemController@destroy']);
+
+  $router->get('/bill_demon', ['uses' => 'ExtraController@index']);
 });
 
 $router->get('/debug-sentry', function(){
