@@ -91,7 +91,9 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         $response = $this->formatException($exception);
-    
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            app('sentry')->captureException($exception);
+        }
         return response()->json(['error' => $response], $response['status'] ?? 500);
     }
     

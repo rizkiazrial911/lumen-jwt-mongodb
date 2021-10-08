@@ -14,7 +14,6 @@ On the MongoDB configuration I see a reference from [Jens Sagers](https://github
 
 ## Set Env
 
-import your database with name db is mapp
 ```sh
 APP_NAME=Lumen
 APP_ENV=local

@@ -47,7 +47,7 @@ class AuthController extends Controller
             $email = $request->post('email');
             $password = $request->post('password');
             $credentials = $request->only(['email', 'password']);
-            $token = auth('api')->setTTL(5)->attempt($credentials, true);
+            $token = auth('api')->setTTL(60)->attempt($credentials, true);
             if($token){
                 $jwt = $this->respondWithToken($token);
                 $user = User::where([
@@ -67,7 +67,7 @@ class AuthController extends Controller
             }else{
                 return response()->json([
                     "message" => 'Email or Password not found'
-                ], 400);
+                ], 403);
             }
         }catch(\Exception $e){
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

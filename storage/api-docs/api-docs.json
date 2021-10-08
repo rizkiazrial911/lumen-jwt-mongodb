@@ -1,0 +1,374 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Example API",
+        "contact": {
+            "name": "Support Team",
+            "email": "support@example.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Credentials"
+                ],
+                "operationId": "/api/login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "The email parameter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Some password user match with email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns some sample category things"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Credentials"
+                ],
+                "operationId": "/api/register",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "The Name parameter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "The email parameter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Some password parameter",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns some sample category things",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                }
+            }
+        },
+        "/api/check_login": {
+            "get": {
+                "tags": [
+                    "Credentials"
+                ],
+                "operationId": "/api/check_login",
+                "responses": {
+                    "200": {
+                        "description": "Returns message authorization"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh_token": {
+            "get": {
+                "tags": [
+                    "Credentials"
+                ],
+                "operationId": "/api/refresh_token",
+                "responses": {
+                    "200": {
+                        "description": "Returns new token"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "get": {
+                "tags": [
+                    "Credentials"
+                ],
+                "operationId": "/api/logout",
+                "responses": {
+                    "200": {
+                        "description": "Returns message success logout"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/item": {
+            "get": {
+                "tags": [
+                    "CRUD ITEM"
+                ],
+                "operationId": "get_list",
+                "responses": {
+                    "200": {
+                        "description": "Returns message list item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "CRUD ITEM"
+                ],
+                "operationId": "store",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "The title item",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Some price item",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns message success create item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/item/{id}": {
+            "get": {
+                "tags": [
+                    "CRUD ITEM"
+                ],
+                "operationId": "get_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "A id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns message list item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. when token is not valid."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "CRUD ITEM"
+                ],
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id items",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "The title item",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Some price item",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns message success update item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "CRUD ITEM"
+                ],
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id items",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns message success delete item"
+                    },
+                    "400": {
+                        "description": "Error: Bad request. When required parameters were not supplied."
+                    },
+                    "500": {
+                        "description": "Error: Server error."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Authorization": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

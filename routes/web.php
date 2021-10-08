@@ -36,3 +36,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
   $router->put('item/{_id}', ['uses' => 'ItemController@update']);
   $router->delete('item/{_id}', ['uses' => 'ItemController@destroy']);
 });
+
+$router->get('/debug-sentry', function(){
+  throw new Exception("Error Processing Request", 1);
+});

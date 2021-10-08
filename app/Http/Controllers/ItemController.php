@@ -52,7 +52,7 @@ class ItemController extends Controller
             if($detail_item){
                 return response()->json(array("message"=> "Success Update Item"), 200);
             }
-        }catch(\Exception $e){
+        }catch(\ModelNotFoundException $e){
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
@@ -63,7 +63,7 @@ class ItemController extends Controller
             if($detail_item){
                 return response()->json(array("message"=> "Success delete Item"), 200);
             }
-        }catch(\Exception $e){
+        }catch(\ModelNotFoundException $e){
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }

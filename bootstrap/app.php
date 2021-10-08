@@ -59,7 +59,7 @@ $app->singleton(
 |
 */
 
-$app->configure('api');
+$app->configure('swagger-lume');
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +98,8 @@ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(\SwaggerLume\ServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -108,6 +110,9 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
+
+$app->register('Sentry\Laravel\ServiceProvider');
+$app->register('Sentry\Laravel\Tracing\ServiceProvider');
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
