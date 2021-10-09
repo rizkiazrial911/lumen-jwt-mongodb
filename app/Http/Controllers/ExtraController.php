@@ -17,6 +17,6 @@ class ExtraController extends Controller
                 $demon_list[] = $demon[1];   
             }
         }
-        dd($demon_list);
+        return $demon_list;
     }
 }

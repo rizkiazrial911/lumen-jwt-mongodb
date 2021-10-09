@@ -37,7 +37,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
   $router->delete('item/{_id}', ['uses' => 'ItemController@destroy']);
 
   $router->get('/bill_demon', ['uses' => 'ExtraController@index']);
-  $router->get('/send_mail', ['uses' => 'EmailController@send_email']);
+  $router->post('/send_mail', ['uses' => 'EmailController@send_email']);
 
   $router->get('firebase', ['uses' => 'FirebaseController@index']);
   $router->post('firebase', ['uses' => 'FirebaseController@store']);

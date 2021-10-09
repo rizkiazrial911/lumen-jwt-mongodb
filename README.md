@@ -16,3 +16,5 @@ On the MongoDB configuration I see a reference from [Jens Sagers](https://github
 you can see on .env.example
 ## Set Firebase
 Send your admin SDK firebase json to resource/json
+## Set Email
+you can set email receiver in App/Http/Controller/EmailController

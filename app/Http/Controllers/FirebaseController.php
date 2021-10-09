@@ -10,6 +10,7 @@ class FirebaseController extends Controller
 {
     public function __construct(Database $database){
         $this->middleware('auth');
+        $this->factory = (new Factory)->withServiceAccount(base_path('resources/json/asdas-9ca97-firebase-adminsdk-rag7w-629bbf73c0.json'));
         $this->database = $database;
     }
 
