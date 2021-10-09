@@ -6,7 +6,7 @@ On the MongoDB configuration I see a reference from [Jens Sagers](https://github
 ## Usage
 
 -   `git clone https://gitlab.com/rizkiunder/lumen-jwt-mongodb.git`
--   `cd auth-api`
+-   `cd lumen-jwt-mongodb`
 -   `composer install`
 -   `php artisan jwt:secret`
 -   `php artisan migrate`
